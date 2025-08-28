@@ -1,0 +1,34 @@
+{
+    "name": "effectra/laravel-email",
+    "description": "laravel package for handling internal/external emails",
+    "type": "library",
+    "license": "mit",
+    "authors": [
+         {
+            "name": "Effectra",
+            "email": "info@effectra.com"
+        },
+        {
+            "name": "Mohammed Taha [BMT]",
+            "email": "info@mohammedtaha.net"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Effectra\\LaravelEmail\\": "src/",
+            "Effectra\\LaravelEmail\\Tests\\": "tests/"
+        },
+        "files": [
+            "src/Helpers/functions.php"
+        ]
+    },
+    "minimum-stability": "stable",
+    "require": {},
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Effectra\\LaravelEmail\\Provider\\LaravelEmailServiceProvider"
+            ]
+        }
+    }
+}
