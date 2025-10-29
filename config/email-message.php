@@ -10,7 +10,6 @@ return [
         'username'=>env('EMAIL_USERNAME'), 
         'password'=>env('EMAIL_PASSWORD'), 
     ],
-    'criteria'=>'ALL',
     'models'=>[
         'template' => EmailTemplate::class
     ]

@@ -10,49 +10,6 @@ use Spatie\LaravelPackageTools\PackageServiceProvider;
 
 final class LaravelEmailServiceProvider extends PackageServiceProvider
 {
-    public function register(): void
-    {
-        // Bind IMAP Connection using config
-        $this->app->bind(
-            \Effectra\LaravelEmail\Contracts\ConnectionInterface::class,
-            function () {
-                $config = config('email-message.driver');
-
-                $mailbox = \Effectra\LaravelEmail\Services\Imap\Connection::buildMailBox(
-                    $config['host'],
-                    $config['port'],
-                    $config['protocol']
-                );
-
-                return new \Effectra\LaravelEmail\Services\Imap\Connection(
-                    $mailbox,
-                    $config['username'],
-                    $config['password']
-                );
-            }
-        );
-
-        // Bind MailRetriever with DI for ConnectionInterface
-        $this->app->bind(
-            \Effectra\LaravelEmail\Services\Imap\MailRetriever::class,
-            function ($app) {
-                return new \Effectra\LaravelEmail\Services\Imap\MailRetriever(
-                    $app->make(\Effectra\LaravelEmail\Contracts\ConnectionInterface::class)
-                );
-            }
-        );
-
-        // Bind EmailMessageServiceInterface
-        $this->app->bind(
-            \Effectra\LaravelEmail\Contracts\EmailMessageServiceInterface::class,
-            function ($app) {
-                return new \Effectra\LaravelEmail\Services\EmailMessageService(
-                    $app->make(\Effectra\LaravelEmail\Services\Imap\MailRetriever::class),
-                    $app->make(\Effectra\LaravelEmail\Models\EmailMessage::class)
-                );
-            }
-        );
-    }
 
     public function configurePackage(Package $package): void
     {
