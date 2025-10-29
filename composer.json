@@ -51,5 +51,7 @@
     },
     "autoload-dev": {
         "Effectra\\LaravelEmail\\Tests\\": "tests/"
-    }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
 }
