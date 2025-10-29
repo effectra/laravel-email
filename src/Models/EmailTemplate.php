@@ -2,10 +2,31 @@
 
 namespace Effectra\LaravelEmail\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class EmailTemplate
+ *
+ * Represents a Email Template.
+ *
+ * @package Effectra\LaravelEmail\Models
+ *
+ * @property int|string $id
+ * @property string|null $subject
+ * @property string|null $body
+ * @property array|null $attachments
+ * @property string[]|null $to
+ * @property string $from
+ * @property string[]|null $cc
+ * @property string[]|null $bcc
+ * @property string[]|null $replay_to
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ */
 class EmailTemplate extends Model
 {
+    use HasFactory;
     /**
      * The table associated with the model.
      *
@@ -24,7 +45,8 @@ class EmailTemplate extends Model
         'to',
         'from',
         'cc',
-        'bb',
+        'bcc',
+        'replay_to',
     ];
 
     /**
@@ -34,6 +56,11 @@ class EmailTemplate extends Model
      */
     protected $casts = [
         'attachments' => 'array',
+        'to' => 'array',
+        'from' => 'string',
+        'cc' => 'array',
+        'bcc' => 'array',
+        'replay_to' => 'array',
     ];
 
     public function emails()

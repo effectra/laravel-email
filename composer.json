@@ -1,10 +1,10 @@
 {
     "name": "effectra/laravel-email",
-    "description": "laravel package for handling internal/external emails",
+    "description": "Laravel package for handling internal/external emails",
     "type": "library",
     "license": "mit",
     "authors": [
-         {
+        {
             "name": "Effectra",
             "email": "info@effectra.com"
         },
@@ -16,19 +16,51 @@
     "autoload": {
         "psr-4": {
             "Effectra\\LaravelEmail\\": "src/",
+            "Effectra\\LaravelEmail\\Database\\": "database/",
             "Effectra\\LaravelEmail\\Tests\\": "tests/"
         },
         "files": [
             "src/Helpers/functions.php"
         ]
     },
-    "minimum-stability": "stable",
-    "require": {},
+    "require": {
+        "effectra/email-address-formatter": "^1.0",
+        "fakerphp/faker": "^1.24",
+        "fruitcake/php-cors": "^1.3",
+        "guzzlehttp/uri-template": "^1.0",
+        "illuminate/cache": "^12.32",
+        "illuminate/database": "^12.32",
+        "illuminate/http": "^12.32",
+        "illuminate/session": "^12.32",
+        "illuminate/validation": "^12.32",
+        "illuminate/translation": "^12.32",
+        "illuminate/container": "^12.32",
+        "illuminate/filesystem": "^12.32",
+        "illuminate/support": "^12.32",
+        "effectra/laravel-status": "^1.0"
+    },
     "extra": {
         "laravel": {
             "providers": [
                 "Effectra\\LaravelEmail\\Provider\\LaravelEmailServiceProvider"
             ]
         }
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^7.3",
+        "pestphp/pest": "^3.8"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "scripts": {
+        "test": "pest",
+        "stan": "phpstan analyse src tests --level 5",
+        "csfix": "php-cs-fixer fix"
+    },
+    "autoload-dev": {
+        "Effectra\\LaravelEmail\\Tests\\": "tests/"
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Effectra\LaravelStatus\Enums;
+namespace Effectra\LaravelEmail\Enums;
 
 
 enum EmailTypeEnum: int
