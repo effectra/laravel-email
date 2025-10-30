@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Effectra\LaravelEmail\Provider;
+namespace Effectra\LaravelEmail\Providers;
 
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
