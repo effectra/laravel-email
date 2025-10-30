@@ -31,7 +31,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Effectra\\LaravelEmail\\Provider\\LaravelEmailServiceProvider"
+                "Effectra\\LaravelEmail\\Providers\\LaravelEmailServiceProvider"
             ]
         }
     },
