@@ -13,12 +13,10 @@ use Effectra\LaravelEmail\Exception\EmailFetchException;
 use Effectra\LaravelEmail\Exception\EmailSendException;
 use Effectra\LaravelEmail\Mails\EmailMessageMailable;
 use Effectra\LaravelEmail\Models\EmailMessage;
-use Effectra\LaravelEmail\Services\Imap\MailRetriever;
 
 class EmailMessageService implements \Effectra\LaravelEmail\Contracts\EmailMessageServiceInterface
 {
     public function __construct(
-        private readonly MailRetriever $mailRetriever,
         private readonly EmailMessage $emailModel
     ) {
 
@@ -40,60 +38,7 @@ class EmailMessageService implements \Effectra\LaravelEmail\Contracts\EmailMessa
         ];
     }
 
-    /**
-     * @return EmailMessage[]
-     */
-    public function saveEmailsFetchedFromExternalSource(): array
-    {
-        try {
-            $emails = $this->mailRetriever->getMails();
-
-            $savedEmails = [];
-
-            foreach ($emails as $email) {
-                $attributes = $this->parseExternalEmailDataToModelAttributes($email);
-
-                $savedEmails[] = $this->emailModel::create($attributes);
-            }
-
-            return $savedEmails;
-
-        } catch (\Throwable $e) {
-            throw new EmailFetchException(
-                "Error fetching emails from external source: " . $e->getMessage(),
-                0,
-                $e
-            );
-        }
-    }
-
-    public function parseExternalEmailDataToModelAttributes(Email $email): array
-    {
-
-        /**
-         * @param Address[] $addresses
-         */
-        function formatAddress(array $addresses)
-        {
-            return implode(', ', array_map(fn(Address $m) => (string) $m, $addresses));
-        }
-
-        return [
-            'subject' => $email->subject ?? '(No Subject)',
-            'body' => $email->body->html ?? $email->body->plain ?? '',
-            'attachments' => array_map(fn(Attachment $attachment) => (new AttachmentHandler($attachment))->save() ?? '', $email->attachments),
-            'to' => formatAddress($email->to),
-            'from' => formatAddress($email->from),
-            'cc' => formatAddress($email->cc),
-            'bcc' => formatAddress($email->bcc),
-            'template_id' => null,
-            'type' => EmailTypeEnum::EXTERNAL->value,
-            'sended_at' => $email->date
-                ? Carbon::parse($email->date)->timezone('UTC')
-                : now(),
-        ];
-    }
-
+    
     public function send(?Carbon $sendDate = null): bool
     {
         try {
